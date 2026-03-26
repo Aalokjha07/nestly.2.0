@@ -5,8 +5,6 @@ import { NextResponse } from "next/server";
 export async function PATCH(req, { params }) {
   try {
     await dbConnect();
-
-    // FIX: Change 'const { id } = params;' to:
     const { id } = await params;
 
     const { status } = await req.json();
@@ -14,7 +12,6 @@ export async function PATCH(req, { params }) {
     const updatedProperty = await Property.findByIdAndUpdate(
       id,
       { Verification_status: status },
-      // Optional: Use returnDocument for Mongoose 8+ as per your console warning
       { returnDocument: "after" },
     );
 
@@ -62,8 +59,6 @@ export async function DELETE(req, { params }) {
 export async function GET(req, { params }) {
   try {
     await dbConnect();
-
-    // CRITICAL: Await params in Next.js 15+
     const { id } = await params;
 
     const property = await Property.findById(id);
