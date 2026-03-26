@@ -28,14 +28,12 @@ export default function AdminVerifyPage() {
       const response = await fetch(`/api/list-property/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        // Ensure you are sending the status string ("verified" or "rejected")
         body: JSON.stringify({ status: newStatus }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        // Refresh the UI by filtering out the updated item
         setPendingList((prev) => prev.filter((item) => item._id !== id));
         alert(`Property ${newStatus}!`);
       } else {
